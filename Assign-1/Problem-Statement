@@ -1,4 +1,4 @@
-C program to do the following:
+Write a C program to do the following:
 Input: A regular expression on the alphabet {a,b}.
 Output: The minimal DFA for the regular expression
 
