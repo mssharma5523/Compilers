@@ -75,15 +75,20 @@ bool isCorrect_regex(string s)
 }
 
 //This function converts the current regex into a parenthesised expression form
+//for now assuming that if any parenthesised expression has come then its inside will be fully parenthesised ,i.e no ambiguity inside
+//parenthesising because difficult to resolve issues such as in case of ab|ab*
+//inserting parenthesis so as to form correct expression
+//prefix and postfix expression will be easier..
 string parenthesised_regex(string s)
 {
 	map<string,char> mapping;//used for performing a mapping between the parenthesis tokens to a single char to make it easier to code..
 	string temp_regex,fin_regex,paren_sep;
 	stack<int> paren;
 	int start_pos,end_pos,j;
-	char unused[]={};
+	char unused[]={'q','w','e','r','t','y','u','i','o','p','z','x','v','n','m','s','j','k','l'};
 	int count=0;//for increasing the mapping counter
-
+	mapping.clear();
+	//this loop checks the already parenthesised expression such as (a|b*) and maps these to a single unused char
 	for(int i=0;i<s.length();i++)
 	{
 		if(s[i]=='(')
@@ -100,31 +105,37 @@ string parenthesised_regex(string s)
 				{
 					paren.pop();
 				}
+				j++;
 			}
-			paren_sep.clear();
-			paren_sep = s.substr(i,j-i+1);
+			paren_sep.clear(); //empties the string
+			paren_sep = s.substr(i,j-i);
 			mapping[paren_sep] = unused[count++];
-			s.erase(s.begin()+i,s.begin()+j-i+1);
+			s.erase(i,j-i);
 			s.insert(i,1,unused[count-1]);
 		}
 	}
+
+	cout<<"The intermediate converted expression is "<<s<<"\n";
 	//next section, to the temp_regex, firstly tokenise by |,then in each token whenever * is there, insert parenthesise it
 	vector<string> tokens;
 	vector<int> positions;
 	vector<int>::iterator it;
 	int cur;
 	stack<char> fin_stk;
-	
+	while(!fin_stk.empty())
+		fin_stk.pop();
 	positions.push_back(0);
 	for(int i=0;i<s.length();i++)
 	{
 		if(s[i]=='|')
 			positions.push_back(i);
 	}
+	positions.push_back(s.length());
 	cur = 0;	
 	char c;
 	for(it = positions.begin()+1;it!=positions.end();it++)
 	{
+		fin_stk.push('(');
 		for(int i=cur;i<*it;i++)
 		{
 			if(s[i]=='*')
@@ -133,20 +144,28 @@ string parenthesised_regex(string s)
 				fin_stk.pop();
 				fin_stk.push('(');
 				fin_stk.push(c);
+				fin_stk.push('*');
+				fin_stk.push(')');
 			}
-			fin_stk.push(s[i]);
+			else
+				fin_stk.push(s[i]);
 		}
-		cur= *it+1;
-		fin_stk.push('|');
+		cur = *it + 1;
+		fin_stk.push(')');
+		if(cur != s.length()+1)
+			fin_stk.push('|');
 	}
 	fin_regex.clear();
+	cout<<"\n"<<fin_stk.size()<<"\n";
 	while(!fin_stk.empty())
 	{
-		fin_regex.append(&fin_stk.top());
+		c = fin_stk.top();
+		//fin_regex.append(&c);
+		fin_regex += c;
 		fin_stk.pop();
 	}	
 	reverse(fin_regex.begin(),fin_regex.end()); //final string after proper parenthesising, now unmapping needs to be done
-	
+	cout<<fin_regex<<"\n";
 	//code segment for unmapping the fin_regex expression so as to get the final expression;
 	map<string,char>::iterator unmap;
 	for(unmap=mapping.begin();unmap!=mapping.end();unmap++)
@@ -157,12 +176,14 @@ string parenthesised_regex(string s)
 			if(fin_regex[i]==c)
 			{
 				fin_regex.insert(i+1,unmap->first);
-				fin_regex.erase(fin_regex.begin()+i);
+				fin_regex.erase(i,1);
 			}
 		}
 	}
 	return fin_regex;
 }
+
+
 
 int main()
 {
@@ -176,6 +197,7 @@ int main()
 	else{
 		cout<<"Correct Expression\nThe parenthesised string is: ";
 		paren_regex = parenthesised_regex(regex);
+		cout<<paren_regex<<"\n";
 	}
 	return 0;
 }
