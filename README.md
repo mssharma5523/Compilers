@@ -1,3 +1,3 @@
 
 
-This is the Respository made for the Compilers Lab
+This is the Repository made for the Compilers Lab
