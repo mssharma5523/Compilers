@@ -1,0 +1,750 @@
+Terminals unused in grammar
+
+   PLUS
+   MINUS
+   TIMES
+   DIVIDE
+   SMALLER
+   SMALLEREQ
+   GREATER
+   GREATEREQ
+   EQEQ
+   AND
+
+
+Grammar
+
+    0 $accept: line $end
+
+    1 line: line exp
+    2     | %empty
+
+    3 exp: binary_op
+    4    | label1
+    5    | cond_jmp
+    6    | uncond_jmp
+    7    | assign
+    8    | parameter
+    9    | return_stmt
+   10    | func_call
+   11    | func_def
+   12    | print_stmt
+   13    | input_stmt
+
+   14 binary_op: id EQUAL id_num bin_operators id_num
+
+   15 id_num: id
+   16       | num
+
+   17 bin_operators: BIN_OP
+
+   18 id: ID
+
+   19 num: NUM
+
+   20 label: LABEL
+
+   21 uncond_jmp: GOTO label
+
+   22 cond_jmp: IF id GOTO label
+   23         | IF num GOTO label
+
+   24 assign: id EQUAL id
+   25       | id EQUAL num
+   26       | id EQUAL res
+
+   27 res: _RES
+
+   28 label1: label
+
+   29 parameter: param id
+
+   30 param: PARAM
+
+   31 func_call: call label COMMA num
+
+   32 call: CALL
+
+   33 return_stmt: return
+
+   34 return: RETURN
+
+   35 func_def: def label
+
+   36 def: DEF
+
+   37 print_stmt: print int id
+   38           | print bool id
+   39           | print endl
+   40           | print num
+
+   41 input_stmt: input id
+
+   42 print: PRINT
+
+   43 int: INT
+
+   44 endl: ENDL
+
+   45 bool: BOOL
+
+   46 input: INPUT
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+NUM (258) 19
+ID (259) 18
+EQUAL (260) 14 24 25 26
+BIN_OP (261) 17
+PLUS (262)
+MINUS (263)
+TIMES (264)
+DIVIDE (265)
+SMALLER (266)
+SMALLEREQ (267)
+GREATER (268)
+GREATEREQ (269)
+EQEQ (270)
+GOTO (271) 21 22 23
+IF (272) 22 23
+LABEL (273) 20
+AND (274)
+PARAM (275) 30
+COMMA (276) 31
+CALL (277) 32
+RETURN (278) 34
+DEF (279) 36
+_RES (280) 27
+INT (281) 43
+PRINT (282) 42
+ENDL (283) 44
+BOOL (284) 45
+INPUT (285) 46
+
+
+Nonterminals, with rules where they appear
+
+$accept (31)
+    on left: 0
+line (32)
+    on left: 1 2, on right: 0 1
+exp (33)
+    on left: 3 4 5 6 7 8 9 10 11 12 13, on right: 1
+binary_op (34)
+    on left: 14, on right: 3
+id_num (35)
+    on left: 15 16, on right: 14
+bin_operators (36)
+    on left: 17, on right: 14
+id (37)
+    on left: 18, on right: 14 15 22 24 25 26 29 37 38 41
+num (38)
+    on left: 19, on right: 16 23 25 31 40
+label (39)
+    on left: 20, on right: 21 22 23 28 31 35
+uncond_jmp (40)
+    on left: 21, on right: 6
+cond_jmp (41)
+    on left: 22 23, on right: 5
+assign (42)
+    on left: 24 25 26, on right: 7
+res (43)
+    on left: 27, on right: 26
+label1 (44)
+    on left: 28, on right: 4
+parameter (45)
+    on left: 29, on right: 8
+param (46)
+    on left: 30, on right: 29
+func_call (47)
+    on left: 31, on right: 10
+call (48)
+    on left: 32, on right: 31
+return_stmt (49)
+    on left: 33, on right: 9
+return (50)
+    on left: 34, on right: 33
+func_def (51)
+    on left: 35, on right: 11
+def (52)
+    on left: 36, on right: 35
+print_stmt (53)
+    on left: 37 38 39 40, on right: 12
+input_stmt (54)
+    on left: 41, on right: 13
+print (55)
+    on left: 42, on right: 37 38 39 40
+int (56)
+    on left: 43, on right: 37
+endl (57)
+    on left: 44, on right: 39
+bool (58)
+    on left: 45, on right: 38
+input (59)
+    on left: 46, on right: 41
+
+
+State 0
+
+    0 $accept: . line $end
+
+    $default  reduce using rule 2 (line)
+
+    line  go to state 1
+
+
+State 1
+
+    0 $accept: line . $end
+    1 line: line . exp
+
+    $end    shift, and go to state 2
+    ID      shift, and go to state 3
+    GOTO    shift, and go to state 4
+    IF      shift, and go to state 5
+    LABEL   shift, and go to state 6
+    PARAM   shift, and go to state 7
+    CALL    shift, and go to state 8
+    RETURN  shift, and go to state 9
+    DEF     shift, and go to state 10
+    PRINT   shift, and go to state 11
+    INPUT   shift, and go to state 12
+
+    exp          go to state 13
+    binary_op    go to state 14
+    id           go to state 15
+    label        go to state 16
+    uncond_jmp   go to state 17
+    cond_jmp     go to state 18
+    assign       go to state 19
+    label1       go to state 20
+    parameter    go to state 21
+    param        go to state 22
+    func_call    go to state 23
+    call         go to state 24
+    return_stmt  go to state 25
+    return       go to state 26
+    func_def     go to state 27
+    def          go to state 28
+    print_stmt   go to state 29
+    input_stmt   go to state 30
+    print        go to state 31
+    input        go to state 32
+
+
+State 2
+
+    0 $accept: line $end .
+
+    $default  accept
+
+
+State 3
+
+   18 id: ID .
+
+    $default  reduce using rule 18 (id)
+
+
+State 4
+
+   21 uncond_jmp: GOTO . label
+
+    LABEL  shift, and go to state 6
+
+    label  go to state 33
+
+
+State 5
+
+   22 cond_jmp: IF . id GOTO label
+   23         | IF . num GOTO label
+
+    NUM  shift, and go to state 34
+    ID   shift, and go to state 3
+
+    id   go to state 35
+    num  go to state 36
+
+
+State 6
+
+   20 label: LABEL .
+
+    $default  reduce using rule 20 (label)
+
+
+State 7
+
+   30 param: PARAM .
+
+    $default  reduce using rule 30 (param)
+
+
+State 8
+
+   32 call: CALL .
+
+    $default  reduce using rule 32 (call)
+
+
+State 9
+
+   34 return: RETURN .
+
+    $default  reduce using rule 34 (return)
+
+
+State 10
+
+   36 def: DEF .
+
+    $default  reduce using rule 36 (def)
+
+
+State 11
+
+   42 print: PRINT .
+
+    $default  reduce using rule 42 (print)
+
+
+State 12
+
+   46 input: INPUT .
+
+    $default  reduce using rule 46 (input)
+
+
+State 13
+
+    1 line: line exp .
+
+    $default  reduce using rule 1 (line)
+
+
+State 14
+
+    3 exp: binary_op .
+
+    $default  reduce using rule 3 (exp)
+
+
+State 15
+
+   14 binary_op: id . EQUAL id_num bin_operators id_num
+   24 assign: id . EQUAL id
+   25       | id . EQUAL num
+   26       | id . EQUAL res
+
+    EQUAL  shift, and go to state 37
+
+
+State 16
+
+   28 label1: label .
+
+    $default  reduce using rule 28 (label1)
+
+
+State 17
+
+    6 exp: uncond_jmp .
+
+    $default  reduce using rule 6 (exp)
+
+
+State 18
+
+    5 exp: cond_jmp .
+
+    $default  reduce using rule 5 (exp)
+
+
+State 19
+
+    7 exp: assign .
+
+    $default  reduce using rule 7 (exp)
+
+
+State 20
+
+    4 exp: label1 .
+
+    $default  reduce using rule 4 (exp)
+
+
+State 21
+
+    8 exp: parameter .
+
+    $default  reduce using rule 8 (exp)
+
+
+State 22
+
+   29 parameter: param . id
+
+    ID  shift, and go to state 3
+
+    id  go to state 38
+
+
+State 23
+
+   10 exp: func_call .
+
+    $default  reduce using rule 10 (exp)
+
+
+State 24
+
+   31 func_call: call . label COMMA num
+
+    LABEL  shift, and go to state 6
+
+    label  go to state 39
+
+
+State 25
+
+    9 exp: return_stmt .
+
+    $default  reduce using rule 9 (exp)
+
+
+State 26
+
+   33 return_stmt: return .
+
+    $default  reduce using rule 33 (return_stmt)
+
+
+State 27
+
+   11 exp: func_def .
+
+    $default  reduce using rule 11 (exp)
+
+
+State 28
+
+   35 func_def: def . label
+
+    LABEL  shift, and go to state 6
+
+    label  go to state 40
+
+
+State 29
+
+   12 exp: print_stmt .
+
+    $default  reduce using rule 12 (exp)
+
+
+State 30
+
+   13 exp: input_stmt .
+
+    $default  reduce using rule 13 (exp)
+
+
+State 31
+
+   37 print_stmt: print . int id
+   38           | print . bool id
+   39           | print . endl
+   40           | print . num
+
+    NUM   shift, and go to state 34
+    INT   shift, and go to state 41
+    ENDL  shift, and go to state 42
+    BOOL  shift, and go to state 43
+
+    num   go to state 44
+    int   go to state 45
+    endl  go to state 46
+    bool  go to state 47
+
+
+State 32
+
+   41 input_stmt: input . id
+
+    ID  shift, and go to state 3
+
+    id  go to state 48
+
+
+State 33
+
+   21 uncond_jmp: GOTO label .
+
+    $default  reduce using rule 21 (uncond_jmp)
+
+
+State 34
+
+   19 num: NUM .
+
+    $default  reduce using rule 19 (num)
+
+
+State 35
+
+   22 cond_jmp: IF id . GOTO label
+
+    GOTO  shift, and go to state 49
+
+
+State 36
+
+   23 cond_jmp: IF num . GOTO label
+
+    GOTO  shift, and go to state 50
+
+
+State 37
+
+   14 binary_op: id EQUAL . id_num bin_operators id_num
+   24 assign: id EQUAL . id
+   25       | id EQUAL . num
+   26       | id EQUAL . res
+
+    NUM   shift, and go to state 34
+    ID    shift, and go to state 3
+    _RES  shift, and go to state 51
+
+    id_num  go to state 52
+    id      go to state 53
+    num     go to state 54
+    res     go to state 55
+
+
+State 38
+
+   29 parameter: param id .
+
+    $default  reduce using rule 29 (parameter)
+
+
+State 39
+
+   31 func_call: call label . COMMA num
+
+    COMMA  shift, and go to state 56
+
+
+State 40
+
+   35 func_def: def label .
+
+    $default  reduce using rule 35 (func_def)
+
+
+State 41
+
+   43 int: INT .
+
+    $default  reduce using rule 43 (int)
+
+
+State 42
+
+   44 endl: ENDL .
+
+    $default  reduce using rule 44 (endl)
+
+
+State 43
+
+   45 bool: BOOL .
+
+    $default  reduce using rule 45 (bool)
+
+
+State 44
+
+   40 print_stmt: print num .
+
+    $default  reduce using rule 40 (print_stmt)
+
+
+State 45
+
+   37 print_stmt: print int . id
+
+    ID  shift, and go to state 3
+
+    id  go to state 57
+
+
+State 46
+
+   39 print_stmt: print endl .
+
+    $default  reduce using rule 39 (print_stmt)
+
+
+State 47
+
+   38 print_stmt: print bool . id
+
+    ID  shift, and go to state 3
+
+    id  go to state 58
+
+
+State 48
+
+   41 input_stmt: input id .
+
+    $default  reduce using rule 41 (input_stmt)
+
+
+State 49
+
+   22 cond_jmp: IF id GOTO . label
+
+    LABEL  shift, and go to state 6
+
+    label  go to state 59
+
+
+State 50
+
+   23 cond_jmp: IF num GOTO . label
+
+    LABEL  shift, and go to state 6
+
+    label  go to state 60
+
+
+State 51
+
+   27 res: _RES .
+
+    $default  reduce using rule 27 (res)
+
+
+State 52
+
+   14 binary_op: id EQUAL id_num . bin_operators id_num
+
+    BIN_OP  shift, and go to state 61
+
+    bin_operators  go to state 62
+
+
+State 53
+
+   15 id_num: id .
+   24 assign: id EQUAL id .
+
+    BIN_OP    reduce using rule 15 (id_num)
+    $default  reduce using rule 24 (assign)
+
+
+State 54
+
+   16 id_num: num .
+   25 assign: id EQUAL num .
+
+    BIN_OP    reduce using rule 16 (id_num)
+    $default  reduce using rule 25 (assign)
+
+
+State 55
+
+   26 assign: id EQUAL res .
+
+    $default  reduce using rule 26 (assign)
+
+
+State 56
+
+   31 func_call: call label COMMA . num
+
+    NUM  shift, and go to state 34
+
+    num  go to state 63
+
+
+State 57
+
+   37 print_stmt: print int id .
+
+    $default  reduce using rule 37 (print_stmt)
+
+
+State 58
+
+   38 print_stmt: print bool id .
+
+    $default  reduce using rule 38 (print_stmt)
+
+
+State 59
+
+   22 cond_jmp: IF id GOTO label .
+
+    $default  reduce using rule 22 (cond_jmp)
+
+
+State 60
+
+   23 cond_jmp: IF num GOTO label .
+
+    $default  reduce using rule 23 (cond_jmp)
+
+
+State 61
+
+   17 bin_operators: BIN_OP .
+
+    $default  reduce using rule 17 (bin_operators)
+
+
+State 62
+
+   14 binary_op: id EQUAL id_num bin_operators . id_num
+
+    NUM  shift, and go to state 34
+    ID   shift, and go to state 3
+
+    id_num  go to state 64
+    id      go to state 65
+    num     go to state 66
+
+
+State 63
+
+   31 func_call: call label COMMA num .
+
+    $default  reduce using rule 31 (func_call)
+
+
+State 64
+
+   14 binary_op: id EQUAL id_num bin_operators id_num .
+
+    $default  reduce using rule 14 (binary_op)
+
+
+State 65
+
+   15 id_num: id .
+
+    $default  reduce using rule 15 (id_num)
+
+
+State 66
+
+   16 id_num: num .
+
+    $default  reduce using rule 16 (id_num)

@@ -1,0 +1,34 @@
+input a1
+i1=0
+r2=i1 < 2
+label3: if r2 goto label4:
+goto label5:
+label4:
+r3=i1+1
+i1=r3
+r4=a1+1
+a1=r4
+r2=i1 < 2
+ goto label3:
+label5:
+foolabel1 = a1
+param a1
+call foo: ,1
+__def foo:
+a1 = foolabel1
+print INT a1
+print endl
+r0=a1 > 0
+if r0 goto label0:
+goto label1:
+label0:
+r1=a1-1
+a1=r1
+foolabel1 = a1
+param a1
+call foo: ,1
+goto label2:
+label1:
+label2:
+res = 9
+func_end
